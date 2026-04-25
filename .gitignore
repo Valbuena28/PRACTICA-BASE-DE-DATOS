@@ -1,11 +1,12 @@
 # Dependencias
 node_modules/
 
-# Dependencias
-node_modules/
-
-# Entorno
+# Seguridad y Configuración (NUNCA SUBIR ESTO)
 .env
+
+# Archivos temporales de SQLite (si quedaron)
+database.sqlite
+database.sqlite-journal
 
 # OS
 .DS_Store
