@@ -1,40 +1,40 @@
-# 🐘 Práctica de Base de Datos (PostgreSQL) y Git
+# 🐘 Práctica de Base de Datos Profesional (Híbrida)
 
-Este proyecto demuestra cómo trabajar con **PostgreSQL** de forma colaborativa usando variables de entorno y control de versiones profesional.
+Este proyecto está diseñado para funcionar en cualquier entorno, ya sea que prefieras usar **Docker** o una instalación **Local** de PostgreSQL.
 
 ## 🛠️ Tecnologías
 - **Backend:** Node.js + Express
 - **Base de Datos:** PostgreSQL
-- **Seguridad:** Dotenv (Variables de entorno)
+- **Contenedores:** Docker & Docker Compose
 
 ---
 
-## 👨‍💻 Instrucciones para el Colaborador (Pull)
+## 👨‍💻 Cómo empezar (Doble clic y listo)
 
-Si acabas de hacer un `git pull`, sigue estos pasos:
+Para facilitar la vida al equipo, usa el archivo **`run.bat`**. Al abrirlo, te preguntará cómo quieres trabajar:
 
-1. **Instalar dependencias:**
-   ```bash
-   npm install
-   ```
+### Opción 1: Con Docker (Recomendado)
+- No necesitas configurar nada en tu PC.
+- El script levantará un Postgres limpio en el puerto **`5445`**.
+- Usuario: `postgres` / Clave: `admin` (configurado automáticamente).
 
-2. **Configurar la Base de Datos:**
-   - Asegúrate de tener PostgreSQL corriendo.
-   - Crea una base de datos vacía (ejemplo: `practica_db`).
-   - Copia el archivo `.env.example` y cámbiale el nombre a `.env`.
-   - Edita el `.env` con tu usuario y contraseña de Postgres.
-
-3. **Migrar datos (Opcional):**
-   Si quieres tener el mensaje inicial de Freddy, puedes ejecutar el contenido de `seed.sql` en tu herramienta de base de datos (pgAdmin, DBeaver, etc.).
-
-4. **Iniciar el servidor:**
-   ```bash
-   npm start
-   ```
+### Opción 2: Local (Sin Docker)
+- Usa tu propia instalación de PostgreSQL.
+- **IMPORTANTE:** Debes configurar el archivo `.env` con tus credenciales locales (Usuario, Clave, Host y Puerto).
 
 ---
 
-## 📋 Reglas de Oro
+## 📋 Configuración Inicial
 
-1. **NUNCA subas el archivo `.env`:** Ya está en el `.gitignore`. Cada desarrollador tiene sus propios accesos.
-2. **Usa `.env.example`:** Si agregas una nueva variable, actualiza este archivo para que los demás sepan que la necesitan.
+1. **Instalar dependencias:** `npm install` (el `run.bat` lo hace por ti si falta).
+2. **Variables de Entorno:** Copia `.env.example` a `.env` y ajusta según tu preferencia.
+3. **Base de Datos:** 
+   - Si usas Docker, la DB `practica_db` se crea sola.
+   - Si usas Local, debes crearla manualmente: `CREATE DATABASE practica_db;`.
+
+---
+
+## 🔄 Flujo de Trabajo
+
+- **¿Hiciste cambios?** `git add .` -> `git commit -m "..."` -> `git push origin main`.
+- **¿Vas a empezar a trabajar?** Siempre haz un `git pull` primero para tener lo último del equipo.

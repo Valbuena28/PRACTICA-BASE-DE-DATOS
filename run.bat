@@ -1,23 +1,30 @@
 @echo off
-TITLE Proyecto Base de Datos - Docker Mode
+TITLE Proyecto Base de Datos - Modo Hibrido (Docker/Local)
 SETLOCAL
 
 echo ==========================================
-echo   INICIANDO ENTORNO DOCKER...
+echo   SELECCIONA EL MODO DE BASE DE DATOS
 echo ==========================================
+echo [1] Usar PostgreSQL con DOCKER (Recomendado)
+echo [2] Usar PostgreSQL LOCAL (Debes configurar el .env)
+echo.
 
-:: Levantar la base de datos en Docker
-call docker compose up -d
-if %errorlevel% neq 0 (
-    echo [ERROR] No se pudo iniciar Docker. Asegurate de que Docker Desktop este abierto.
-    pause
-    exit /b 1
+set /p choice="Elige una opcion (1 o 2): "
+
+if "%choice%"=="1" (
+    echo [INFO] Levantando Docker...
+    call docker compose up -d
+    if %errorlevel% neq 0 (
+        echo [ERROR] No se pudo iniciar Docker. Asegurate de que este abierto.
+        pause
+        exit /b 1
+    )
+) else (
+    echo [INFO] Saltando Docker. Usando configuracion del archivo .env...
 )
 
-echo [OK] Base de datos en Docker lista.
-
 echo ==========================================
-echo   VERIFICANDO NODE.JS...
+echo   INICIANDO SERVIDOR...
 echo ==========================================
 
 :: Verificar Node
@@ -34,9 +41,7 @@ if not exist "node_modules\" (
     call npm install
 )
 
-echo [OK] Todo listo. Iniciando servidor...
-
-:: Abrir el navegador
+:: Abrir el navegador (leemos el puerto del .env si existe)
 start "" "http://localhost:3005"
 
 :: Ejecutar el servidor
