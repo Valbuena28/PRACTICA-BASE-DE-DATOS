@@ -32,7 +32,7 @@ echo [OK] Dependencias listas.
 echo [INFO] Iniciando servidor y abriendo navegador...
 
 :: Abrir el navegador
-start "" "http://localhost:3000"
+start "" "http://localhost:3005"
 
 :: Ejecutar el servidor
 call npm start
