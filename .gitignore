@@ -1,0 +1,13 @@
+# Dependencias
+node_modules/
+
+# Base de Datos Local (No se sube el archivo de datos, solo el código)
+database.sqlite
+database.sqlite-journal
+
+# Entorno
+.env
+
+# OS
+.DS_Store
+Thumbs.db

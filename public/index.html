@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guestbook Premium | DB Demo</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <main class="container">
+        <header>
+            <h1>Libro de Visitas <span>Interactivo</span></h1>
+            <p>Práctica de Base de Datos y Control de Versiones</p>
+        </header>
+
+        <section class="form-card glass">
+            <form id="messageForm">
+                <div class="input-group">
+                    <label for="name">Nombre</label>
+                    <input type="text" id="name" placeholder="Tu nombre artístico..." required>
+                </div>
+                <div class="input-group">
+                    <label for="content">Mensaje</label>
+                    <textarea id="content" placeholder="Escribe algo épico..." required></textarea>
+                </div>
+                <button type="submit" id="submitBtn">Enviar Mensaje</button>
+            </form>
+        </section>
+
+        <section class="messages-container">
+            <h2>Mensajes Recientes</h2>
+            <div id="messagesList" class="messages-list">
+                <!-- Messages will appear here -->
+                <div class="loading">Cargando pensamientos...</div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
