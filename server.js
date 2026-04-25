@@ -21,25 +21,28 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
-// Inicialización de la Base de Datos
+// Inicialización de la Base de Datos con Reintentos
 const initDB = async () => {
-    try {
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS messages (
-                id SERIAL PRIMARY KEY,
-                name VARCHAR(100) NOT NULL,
-                content TEXT NOT NULL,
-                timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        `);
-        console.log('✅ Conectado a PostgreSQL y tabla verificada.');
-    } catch (err) {
-        console.error('❌ Error conectando a PostgreSQL:', err.message);
-        console.log('\n--- AYUDA PARA EL EQUIPO ---');
-        console.log('1. Instala PostgreSQL si no lo tienes.');
-        console.log('2. Crea la DB: CREATE DATABASE ' + (process.env.DB_NAME || 'practica_db') + ';');
-        console.log('3. Copia .env.example a .env y pon tus credenciales.');
+    let retries = 5;
+    while (retries > 0) {
+        try {
+            await pool.query(`
+                CREATE TABLE IF NOT EXISTS messages (
+                    id SERIAL PRIMARY KEY,
+                    name VARCHAR(100) NOT NULL,
+                    content TEXT NOT NULL,
+                    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            `);
+            console.log('✅ Conectado a PostgreSQL y tabla verificada.');
+            return; // Éxito
+        } catch (err) {
+            retries--;
+            console.log(`⏳ Esperando a que PostgreSQL despierte... (${retries} reintentos restantes)`);
+            await new Promise(res => setTimeout(res, 3000)); // Esperar 3 segundos
+        }
     }
+    console.error('❌ No se pudo conectar a PostgreSQL tras varios intentos.');
 };
 
 initDB();
