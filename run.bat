@@ -1,46 +1,45 @@
 @echo off
-TITLE Proyecto Base de Datos - Debug Mode
+TITLE Proyecto Base de Datos - Docker Mode
 SETLOCAL
 
 echo ==========================================
-echo   VERIFICANDO ENTORNO...
+echo   INICIANDO ENTORNO DOCKER...
 echo ==========================================
 
-:: Verificar si Node.js esta instalado
-node -v >nul 2>&1
+:: Levantar la base de datos en Docker
+call docker compose up -d
 if %errorlevel% neq 0 (
-    echo [ERROR] Node.js no esta instalado o no se encuentra en el PATH.
-    echo Por favor, instala Node.js desde https://nodejs.org/
+    echo [ERROR] No se pudo iniciar Docker. Asegurate de que Docker Desktop este abierto.
     pause
     exit /b 1
 )
 
-echo [OK] Node.js detectado.
+echo [OK] Base de datos en Docker lista.
 
-:: Verificar si existe node_modules
-if not exist "node_modules\" (
-    echo [INFO] No se encontraron dependencias. Instalando...
-    call npm install
-    if %errorlevel% neq 0 (
-        echo [ERROR] Error critico durante npm install.
-        pause
-        exit /b 1
-    )
+echo ==========================================
+echo   VERIFICANDO NODE.JS...
+echo ==========================================
+
+:: Verificar Node
+node -v >nul 2>&1
+if %errorlevel% neq 0 (
+    echo [ERROR] Node.js no detectado.
+    pause
+    exit /b 1
 )
 
-echo [OK] Dependencias listas.
-echo [INFO] Iniciando servidor y abriendo navegador...
+:: Instalar dependencias si faltan
+if not exist "node_modules\" (
+    echo [INFO] Instalando dependencias...
+    call npm install
+)
+
+echo [OK] Todo listo. Iniciando servidor...
 
 :: Abrir el navegador
 start "" "http://localhost:3005"
 
 :: Ejecutar el servidor
 call npm start
-
-:: Si falla el inicio del servidor, que no se cierre la ventana
-if %errorlevel% neq 0 (
-    echo [ERROR] El servidor se detuvo inesperadamente.
-    pause
-)
 
 pause
